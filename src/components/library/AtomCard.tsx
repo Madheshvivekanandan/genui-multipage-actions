@@ -12,7 +12,7 @@ export function AtomCard({ type }: { type: AtomType }) {
   const { props, description } = ATOMS[type];
   const spec = sampleSpec(type, []);
   return (
-    <article className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+    <article id={type} className="flex scroll-mt-6 flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
       <header className="flex items-center justify-between gap-3">
         <h3 className="font-mono text-[15px] text-[var(--ink)]">{type}</h3>
         <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] tracking-[0.1em] text-[var(--muted)] uppercase">

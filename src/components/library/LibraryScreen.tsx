@@ -1,7 +1,8 @@
 /**
- * FRONTEND · components/library/LibraryScreen.tsx — the /components page: every atom and every composite.
+ * FRONTEND · components/library/LibraryScreen.tsx — the /components page: every atom and every molecule.
  *
- * Read-only: atoms are React code, composites are edited in data/composites.json.
+ * The page calls composites "molecules" (atomic design: molecules are made of atoms).
+ * Read-only: atoms are React code, molecules are edited in data/composites.json.
  */
 "use client";
 
@@ -21,7 +22,7 @@ export function LibraryScreen() {
         <div>
           <h1 className="text-[28px] font-light text-[var(--ink)]">Component library</h1>
           <p className="text-[13px] text-[var(--muted)]">
-            {ATOM_TYPES.length} atoms (React code) · {COMPOSITES.length} composites (data/composites.json). Every piece can carry a note that opens a popup.
+            {ATOM_TYPES.length} atoms (React code) · {COMPOSITES.length} molecules made of atoms (data/composites.json). Every piece can carry a note that opens a popup.
           </p>
         </div>
         <Link href="/" className="rounded-lg border border-white/15 px-3 py-1.5 text-[13px] text-[var(--ink)] hover:bg-white/10">
@@ -36,7 +37,7 @@ export function LibraryScreen() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className={H2}>Composites</h2>
+        <h2 className={H2}>Molecules</h2>
         {COMPOSITES.map((def) => (
           <CompositeCard key={def.type} def={def} />
         ))}

@@ -1,7 +1,7 @@
 /**
  * FRONTEND · components/library/Preview.tsx — draws a sample spec with the real registry.
  *
- * `card`: put it on a light card first (atoms and plain composites; panels and accordions draw their own).
+ * `card`: put it on a light card first (atoms and plain molecules; panels and accordions draw their own).
  */
 "use client";
 
