@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GenUI Doc Flow",
-  description: "Three agents build three pages from a document (Vercel AI SDK + json-render)",
+  title: "GenUI Multipage Actions",
+  description: "Each action builds the next page with its own AI agent (Vercel AI SDK + json-render)",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

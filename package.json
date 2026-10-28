@@ -1,5 +1,5 @@
 {
-  "name": "genui-doc-flow",
+  "name": "genui-multipage-actions",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -31,7 +31,7 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "Document-driven GenUI POC: three agents build three pages from a document, rendered from a fixed component catalog (Vercel AI SDK + json-render)",
+  "description": "GenUI POC: each action builds the next page with its own AI agent, rendered from a fixed component catalog (Vercel AI SDK + json-render)",
   "engines": {
     "node": ">=22"
   }

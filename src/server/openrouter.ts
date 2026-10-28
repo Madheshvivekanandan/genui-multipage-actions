@@ -9,5 +9,5 @@ import "server-only"; // build fails if any browser file ever imports this one
 
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 
-export const openrouter = createOpenRouter({ compatibility: "strict", appName: "GenUI Doc Flow" });
+export const openrouter = createOpenRouter({ compatibility: "strict", appName: "GenUI Multipage Actions" });
 export const MODEL = process.env.OPENROUTER_MODEL ?? "google/gemini-3.5-flash";

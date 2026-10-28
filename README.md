@@ -1,14 +1,15 @@
-# GenUI Doc Flow
+# GenUI Multipage Actions
 
-A document-driven GenUI proof of concept. Three AI agents each build one page as
-[json-render](https://github.com/vercel-labs/json-render) JSON, streamed to the
-browser and rendered from a fixed component catalog.
+A GenUI proof of concept where each action builds the next page. Three AI
+agents each build one page as [json-render](https://github.com/vercel-labs/json-render)
+JSON, streamed to the browser and rendered from a fixed component catalog.
 
-1. **RFP Overview**: the document is shown at the top; "Process document" runs agent 1.
-2. **Prospect Intelligence**: the control at the bottom of page 1 runs agent 2.
-3. **Suggested POVs**: the control at the bottom of page 2 runs agent 3.
+1. **RFP Overview**: page 1 shows the document; "Process document" runs agent 1.
+2. **Prospect Intelligence**: the button under page 1 runs agent 2 and opens page 2.
+3. **Suggested POV**: the button under page 2 runs agent 3 and opens page 3, which can be re-run.
 
-Patterns come from `../genui-studio` (frozen reference).
+Each agent gets the document plus the pages before it. Back shows a page
+already built, with no new AI call. Patterns come from `../genui-studio` (frozen reference).
 
 ## Setup
 
@@ -24,6 +25,7 @@ Checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 
 | Path | What |
 | --- | --- |
+| `data/documents/pinecrest-rfp.md` | The sample document: the RFP, what our Brain holds, the research base |
 | `data/composites.json` | Composite components, written by hand (slots + approved layouts) |
 | `src/lib/catalog.ts` | Page + atoms + composites → json-render catalog and agent prompt |
 | `src/lib/composites.ts` | The composite schema and its checks |
@@ -34,7 +36,7 @@ Checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 | `src/components/atoms.tsx` | Atoms (React code) |
 | `src/components/CompositeFrame.tsx` | Draws any composite from its definition |
 | `src/components/usePageAgent.ts` | One page's AI call in the browser (stream, stop, retry) |
-| `src/components/FlowScreen.tsx` | The app screen |
+| `src/components/FlowScreen.tsx` | The app screen and its page buttons |
 
 ## Robustness (ported from genui-studio)
 
