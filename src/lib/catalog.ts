@@ -22,7 +22,7 @@ import { defineCatalog } from "@json-render/core";
 import { schema } from "@json-render/react/schema";
 import { z } from "zod";
 import compositesFile from "../../data/composites.json";
-import { ATOM_TYPES, ATOMS } from "./atoms";
+import { ATOM_TYPES, ATOMS, NOTE_TARGETS } from "./atoms";
 import { checkComposites, describeComposite, type CompositeDef } from "./composites";
 import { NOTE } from "./note";
 
@@ -65,7 +65,8 @@ export const RULES = [
   "Build the COMPLETE page in one answer.",
   "Write literal prop values. Do NOT use $state, $item, $bindState or repeat: write every element explicitly.",
   "Use only facts from the document you are given. Never invent names, numbers or dates, and never use lorem ipsum.",
-  'Add a "note" ({ "title", "text" }) only where your reasoning helps the reader, at most 4 notes per page. Keep each note to one or two sentences.',
+  `Notes: of every 10 content pieces (${NOTE_TARGETS.join(", ")}), give 8 a "note" ({ "title", "text" }) and leave 2 WITHOUT one. Leave out the pieces that speak for themselves, e.g. a plain scope item or a tag whose value says it all. A page with 50 content pieces has about 40 notes and about 10 pieces with none.`,
+  "A note's title is your read of the piece in under 10 words; its text says in one or two sentences why it matters or where it comes from. Every title is different. No notes on Eyebrows, Captions, ColumnLabels, PositionTabs or composites.",
 ];
 
 /** How to fill a composite's named slots: json-render's prompt lists slot names but never shows the format. */

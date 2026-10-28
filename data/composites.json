@@ -1,7 +1,7 @@
 [
   {
     "type": "ScreenHeader",
-    "description": "The top of every page: an eyebrow ('RFP OVERVIEW · CLIENT'), a big one-sentence headline, an optional short body, up to 4 key points and up to 4 stats.",
+    "description": "The top of every page: an eyebrow ('RFP OVERVIEW \u00b7 CLIENT'), a big one-sentence headline, an optional short body, up to 4 key points and up to 4 stats.",
     "frame": "panel",
     "slots": {
       "header": {
@@ -212,6 +212,7 @@
     "type": "Rows",
     "description": "A labelled list of rows with lines between: Requirements, FitRows, Evidence (after ColumnLabels) or Findings, and an optional footnote.",
     "frame": "plain",
+    "noteKind": "feedback",
     "slots": {
       "label": {
         "allow": [
@@ -304,6 +305,7 @@
     "type": "Positions",
     "description": "A tab strip of 2-4 Positions; the reader opens one at a time and the recommended one opens first.",
     "frame": "plain",
+    "noteKind": "feedback",
     "slots": {
       "positions": {
         "allow": [
@@ -324,6 +326,7 @@
     "type": "Position",
     "description": "One position in a Positions tab strip: its tab (PositionTab) and its body (a Headline stating the position, Bodies, a Quote, Groups and Chips).",
     "frame": "plain",
+    "noteKind": "feedback",
     "slots": {
       "tab": {
         "allow": [

@@ -9,6 +9,13 @@ import { z } from "zod";
 export const NOTE = z
   .object({ title: z.string(), text: z.string() })
   .optional()
-  .describe("Optional popup explaining your reasoning for this piece. Only where it helps the reader.");
+  .describe("A popup with your reasoning for this piece: a short title and one or two sentences.");
 
 export type Note = z.infer<typeof NOTE>;
+
+/**
+ * Which popup a note opens. Decided by the component, never by the AI:
+ * feedback (agree / disagree) on pieces that make a judgment, questions on the rest.
+ */
+export const NOTE_KINDS = ["question", "feedback"] as const;
+export type NoteKind = (typeof NOTE_KINDS)[number];

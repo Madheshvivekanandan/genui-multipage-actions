@@ -14,6 +14,7 @@
  */
 import type { UIElement } from "@json-render/core";
 import { z } from "zod";
+import { NOTE_KINDS } from "./note";
 
 // What the frame draws around the slots: panel = the header card · accordion = a
 // collapsible card with a coloured tab label · plain = nothing.
@@ -29,6 +30,8 @@ export const compositeSchema = z.object({
   type: z.string().regex(/^[A-Z][A-Za-z0-9]*$/, "type must be PascalCase, e.g. RiskPanel"),
   description: z.string().trim().min(10, "description tells the AI when to use it (10+ characters)"),
   frame: z.enum(FRAMES),
+  // The popup a note on this composite opens (default "question"). Not shown to the AI.
+  noteKind: z.enum(NOTE_KINDS).optional(),
   slots: z.record(
     z.string().regex(/^[a-z][a-zA-Z0-9]*$/, "slot names must be camelCase"),
     z.object({

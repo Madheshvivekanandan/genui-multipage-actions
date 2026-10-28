@@ -13,6 +13,7 @@ import { useMemo, useRef } from "react";
 import { MODEL_BUSY } from "@/lib/errors";
 import type { PageId, PageInput } from "@/lib/pages";
 import { specFromMessage } from "@/lib/spec";
+import type { PageMessage } from "@/lib/usage";
 
 export function usePageAgent(page: PageId) {
   const input = useRef<PageInput | null>(null);
@@ -21,14 +22,14 @@ export function usePageAgent(page: PageId) {
   // The agent needs only the input (sent as the request body), not the chat history.
   const transport = useMemo(
     () =>
-      new DefaultChatTransport({
+      new DefaultChatTransport<PageMessage>({
         api: `/api/pages/${page}`,
         prepareSendMessagesRequest: ({ id, body }) => ({ body: { ...body, id } }),
       }),
     [page],
   );
 
-  const { messages, sendMessage, setMessages, status, error, stop, regenerate } = useChat({
+  const { messages, sendMessage, setMessages, status, error, stop, regenerate } = useChat<PageMessage>({
     id: page,
     transport,
     onError: (e) => {
@@ -44,7 +45,9 @@ export function usePageAgent(page: PageId) {
   const spec = useMemo(() => specFromMessage(answer), [answer]);
 
   return {
+    page,
     spec,
+    usage: answer?.metadata?.usage,
     busy: status === "submitted" || status === "streaming",
     error,
     stop,
