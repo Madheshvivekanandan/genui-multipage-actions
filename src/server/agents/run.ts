@@ -17,7 +17,9 @@ import type { PageAgent } from "./types";
 // A model under high demand gets slow, sometimes accepts a request and then
 // sends nothing for minutes, or stops halfway with an error. Give up instead
 // of hanging: the browser shows the error and asks once more on its own.
-const FIRST_OUTPUT_MS = 45_000; // it thinks before it writes the first word
+// It thinks before it writes the first word: with the full catalog that takes
+// 37-56 s (genui-studio needed 45 s), while a stalled call stays silent for minutes.
+const FIRST_OUTPUT_MS = 90_000;
 const BETWEEN_OUTPUT_MS = 20_000; // once writing, text arrives every second or so
 
 export function streamPage(agent: PageAgent, input: PageInput, abortSignal?: AbortSignal): Response {

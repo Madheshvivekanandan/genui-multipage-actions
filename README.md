@@ -41,7 +41,7 @@ Checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 
 ## Robustness (ported from genui-studio)
 
-- No first output within 45 s, or a 20 s gap while streaming: the call stops.
+- No first output within 90 s, or a 20 s gap while streaming: the call stops.
 - Stop, or closing the tab, cancels the model call (`req.signal`).
 - Timeouts and 429/502/503 come back as "The model is busy…", and the browser retries once.
 - The server logs `first output after …, done after …` for every call.
