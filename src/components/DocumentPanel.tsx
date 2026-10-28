@@ -1,20 +1,26 @@
 /**
  * FRONTEND · components/DocumentPanel.tsx — the document at the top of page 1, and the button that processes it.
  */
-export function DocumentPanel({ name, text, busy, onProcess }: { name: string; text: string; busy: boolean; onProcess: () => void }) {
+import { PageButton } from "@/components/PageButton";
+import { CARD_TOKENS } from "@/components/frames/tokens";
+
+type Props = { name: string; text: string; busy: boolean; onProcess: () => void };
+
+export function DocumentPanel({ name, text, busy, onProcess }: Props) {
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900">
+    <section style={CARD_TOKENS} className="rounded-2xl bg-[#eff2f5]/[0.97] p-6 text-[var(--ink)]">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="font-mono text-sm font-semibold">{name}</h2>
-        <button
-          onClick={onProcess}
-          disabled={busy}
-          className="rounded-lg bg-sky-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
-        >
+        <div>
+          <p className="text-[10px] font-semibold tracking-[0.14em] text-[var(--muted)] uppercase">Document</p>
+          <h2 className="font-mono text-[13px]">{name}</h2>
+        </div>
+        <PageButton onClick={onProcess} disabled={busy}>
           {busy ? "Processing…" : "Process document"}
-        </button>
+        </PageButton>
       </div>
-      <pre className="mt-3 max-h-60 overflow-y-auto font-sans text-sm whitespace-pre-wrap text-slate-600 dark:text-slate-300">{text}</pre>
+      <pre className="mt-4 max-h-56 overflow-y-auto border-t border-[var(--line)] pt-4 font-sans text-[12.5px] leading-relaxed whitespace-pre-wrap text-[var(--ink-2)]">
+        {text}
+      </pre>
     </section>
   );
 }

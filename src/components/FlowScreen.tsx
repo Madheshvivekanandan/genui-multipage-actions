@@ -34,7 +34,7 @@ export function FlowScreen({ doc }: { doc: SourceDocument }) {
   const open = (page: PageId) => (agents[page].spec || agents[page].busy ? setCurrent(page) : build(page));
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
+    <main className="mx-auto flex w-full max-w-[860px] flex-col gap-6 px-4 py-8">
       {current === "page1" && <DocumentPanel name={doc.name} text={doc.text} busy={agent.busy} onProcess={() => build("page1")} />}
       <PageSection agent={agent} />
       <div className="flex flex-wrap items-center gap-3">

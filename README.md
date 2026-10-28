@@ -33,8 +33,9 @@ Checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 | `src/lib/validate.ts` | Checks a built page: structure, props, slot rules |
 | `src/server/agents/` | One module per agent (`page1.ts` …), the shared runner (`run.ts`) |
 | `src/app/api/pages/[page]/route.ts` | `POST /api/pages/page1` … `page3` |
-| `src/components/atoms.tsx` | Atoms (React code) |
-| `src/components/CompositeFrame.tsx` | Draws any composite from its definition |
+| `src/lib/atoms/` | Each atom's props (Zod) and description, for the AI |
+| `src/components/atoms/` | Each atom's React code (text, lists, chips, rows) |
+| `src/components/frames/` | The frames (panel, accordion, tab strip) that draw any composite from its definition |
 | `src/components/usePageAgent.ts` | One page's AI call in the browser (stream, stop, retry) |
 | `src/components/FlowScreen.tsx` | The app screen and its page buttons |
 

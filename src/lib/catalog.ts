@@ -9,7 +9,7 @@
  *
  * Three groups:
  *   PAGE       — the root of every page the agents build
- *   ATOMS      — the smallest pieces of the design (React code, components/atoms.tsx)
+ *   ATOMS      — the smallest pieces of the design (props in lib/atoms/, React in components/atoms/)
  *   COMPOSITES — built from atoms, written by hand in data/composites.json
  *
  * Any atom or composite may carry a `note` ({ title, text }): the AI's
@@ -22,28 +22,21 @@ import { defineCatalog } from "@json-render/core";
 import { schema } from "@json-render/react/schema";
 import { z } from "zod";
 import compositesFile from "../../data/composites.json";
+import { ATOM_TYPES, ATOMS } from "./atoms";
 import { checkComposites, describeComposite, type CompositeDef } from "./composites";
-
-/** Why the AI built a piece this way. Optional on every atom and composite. */
-export const NOTE = z
-  .object({ title: z.string(), text: z.string() })
-  .optional()
-  .describe("Optional popup explaining your reasoning for this piece. Only where it helps the reader.");
-export type Note = z.infer<typeof NOTE>;
+import { NOTE } from "./note";
 
 /** Components written in code. The composites from data/composites.json are added on top. */
 const BASE_COMPONENTS = {
   /* ---------- PAGE ---------- */
   Page: {
     props: z.object({ title: z.string() }),
-    description: "ALWAYS the root element. Holds the page title. Children stack vertically.",
+    description: "ALWAYS the root element. Holds the page title. Children (a ScreenHeader, then Sections) stack vertically.",
   },
 
-  /* ---------- ATOMS ---------- */
-  // Built from the design screenshots (next step). Each atom's props include `note: NOTE`.
+  /* ---------- ATOMS (lib/atoms/, drawn by components/atoms/) ---------- */
+  ...ATOMS,
 };
-
-export const ATOM_TYPES: readonly string[] = [];
 
 /** Only the code components: gives the React registry its prop types. */
 export const baseCatalog = defineCatalog(schema, { components: BASE_COMPONENTS, actions: {} });

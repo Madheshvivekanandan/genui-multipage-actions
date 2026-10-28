@@ -15,10 +15,14 @@
 import type { UIElement } from "@json-render/core";
 import { z } from "zod";
 
-// What the frame draws around the slots. More frames (card, accordion, …) come from the design screenshots.
-export const FRAMES = ["plain"] as const;
+// What the frame draws around the slots: panel = the header card · accordion = a
+// collapsible card with a coloured tab label · plain = nothing.
+export const FRAMES = ["panel", "accordion", "plain"] as const;
 // stack = one under another · row = side by side · wrap = chips that wrap
-export const SLOT_STYLES = ["stack", "row", "wrap"] as const;
+// columns = side by side with lines between (stats) · grid = side by side (dates)
+// rows = one under another with lines between · tabs = a tab strip, one item open
+// tab = drawn outside the flow: the accordion's label, or the item's tab in a tab strip
+export const SLOT_STYLES = ["stack", "row", "wrap", "columns", "grid", "rows", "tabs", "tab"] as const;
 export const DIVIDER = "divider";
 
 export const compositeSchema = z.object({
@@ -30,11 +34,11 @@ export const compositeSchema = z.object({
     z.object({
       allow: z.array(z.string()).min(1, "each slot must allow at least one component"),
       min: z.number().int().min(0),
-      max: z.number().int().min(1).max(8),
+      max: z.number().int().min(1).max(12),
       style: z.enum(SLOT_STYLES),
     }),
   ),
-  // Each layout is the order of the slots, top to bottom; "divider" draws a line.
+  // Each layout is the order of the slots, top to bottom; "divider" draws a line. Tab slots are not placed.
   layouts: z.record(z.string().regex(/^[a-z][a-z0-9-]*$/, "layout names must be kebab-case"), z.array(z.string())),
 });
 export type CompositeDef = z.infer<typeof compositeSchema>;
@@ -46,7 +50,7 @@ export const slotKeys = (el: UIElement, slot: string): string[] => el.slots?.[sl
 /** The text json-render shows the AI for this composite (the catalog "description"). */
 export function describeComposite(def: CompositeDef): string {
   const layouts = Object.entries(def.layouts).map(([name, order]) => `${name} = ${order.join(" → ")}`);
-  const slots = Object.entries(def.slots).map(([slot, r]) => `${slot} ${r.min}-${r.max} of ${r.allow.join("/")}`);
+  const slots = Object.entries(def.slots).map(([slot, r]) => `${slot} ${r.min}-${r.max} of ${r.allow.join("/")}${r.style === "tab" ? " (tab)" : ""}`);
   return `${def.description} layout (pick one): ${layouts.join("; ")}. Slots: ${slots.join("; ")}.`;
 }
 
@@ -74,17 +78,21 @@ export function checkComposites(input: unknown, { atoms, reserved }: { atoms: re
     if (slotNames.length === 0) at("add at least one slot");
     for (const [slot, rule] of Object.entries(def.slots)) {
       if (rule.min > rule.max) at(`${slot}: min (${rule.min}) is larger than max (${rule.max})`);
+      if (rule.style === "tab" && rule.max !== 1) at(`${slot}: a tab slot holds one item (max 1)`);
       for (const t of rule.allow) {
         if (t === def.type) at(`${slot}: a component can't contain itself`);
         else if (!known.has(t)) at(`${slot}: unknown component "${t}"`);
       }
     }
+    if (slotNames.filter((s) => def.slots[s].style === "tab").length > 1) at("only one tab slot is allowed");
+
+    const placed = slotNames.filter((s) => def.slots[s].style !== "tab"); // the tab sits outside the flow
     if (Object.keys(def.layouts).length === 0) at("add at least one layout");
     for (const [name, order] of Object.entries(def.layouts)) {
       for (const entry of order) {
-        if (entry !== DIVIDER && !slotNames.includes(entry)) at(`layout ${name}: "${entry}" is not a slot`);
+        if (entry !== DIVIDER && !placed.includes(entry)) at(`layout ${name}: "${entry}" is not a placeable slot`);
       }
-      for (const slot of slotNames) {
+      for (const slot of placed) {
         const n = order.filter((e) => e === slot).length;
         if (n !== 1) at(`layout ${name}: must place "${slot}" exactly once (found ${n})`);
       }

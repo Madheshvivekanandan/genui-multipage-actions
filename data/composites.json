@@ -1,1 +1,356 @@
-[]
+[
+  {
+    "type": "ScreenHeader",
+    "description": "The top of every page: an eyebrow ('RFP OVERVIEW · CLIENT'), a big one-sentence headline, an optional short body, up to 4 key points and up to 4 stats.",
+    "frame": "panel",
+    "slots": {
+      "header": {
+        "allow": [
+          "Eyebrow",
+          "Headline",
+          "Body"
+        ],
+        "min": 2,
+        "max": 3,
+        "style": "stack"
+      },
+      "points": {
+        "allow": [
+          "Bullet"
+        ],
+        "min": 0,
+        "max": 4,
+        "style": "stack"
+      },
+      "stats": {
+        "allow": [
+          "Stat"
+        ],
+        "min": 0,
+        "max": 4,
+        "style": "columns"
+      }
+    },
+    "layouts": {
+      "default": [
+        "header",
+        "points",
+        "divider",
+        "stats"
+      ],
+      "stats-first": [
+        "stats",
+        "divider",
+        "header",
+        "points"
+      ]
+    }
+  },
+  {
+    "type": "Stat",
+    "description": "One key figure: a small label, a big value and an optional caption. Goes in ScreenHeader's stats.",
+    "frame": "plain",
+    "slots": {
+      "label": {
+        "allow": [
+          "Eyebrow"
+        ],
+        "min": 1,
+        "max": 1,
+        "style": "stack"
+      },
+      "value": {
+        "allow": [
+          "BigValue"
+        ],
+        "min": 1,
+        "max": 1,
+        "style": "stack"
+      },
+      "caption": {
+        "allow": [
+          "Caption"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "stack"
+      }
+    },
+    "layouts": {
+      "label-first": [
+        "label",
+        "value",
+        "caption"
+      ],
+      "value-first": [
+        "value",
+        "label",
+        "caption"
+      ]
+    }
+  },
+  {
+    "type": "Section",
+    "description": "A collapsible card for one topic: a coloured tab label (Eyebrow, e.g. 'WHO THEY ARE'), a one-sentence Headline with the takeaway, an optional lead Body, then the content.",
+    "frame": "accordion",
+    "slots": {
+      "tab": {
+        "allow": [
+          "Eyebrow"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "tab"
+      },
+      "header": {
+        "allow": [
+          "Headline"
+        ],
+        "min": 1,
+        "max": 1,
+        "style": "stack"
+      },
+      "lead": {
+        "allow": [
+          "Body"
+        ],
+        "min": 0,
+        "max": 2,
+        "style": "stack"
+      },
+      "content": {
+        "allow": [
+          "Body",
+          "Quote",
+          "Group",
+          "Chips",
+          "Rows",
+          "Timeline",
+          "Columns",
+          "Positions"
+        ],
+        "min": 0,
+        "max": 8,
+        "style": "stack"
+      }
+    },
+    "layouts": {
+      "default": [
+        "header",
+        "divider",
+        "lead",
+        "content"
+      ]
+    }
+  },
+  {
+    "type": "Group",
+    "description": "A labelled block of text: an optional small label (Eyebrow, e.g. 'FROM THE RFP') and its items (quotes, paragraphs, a bulleted or numbered list, a big value).",
+    "frame": "plain",
+    "slots": {
+      "label": {
+        "allow": [
+          "Eyebrow"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "stack"
+      },
+      "items": {
+        "allow": [
+          "Headline",
+          "Body",
+          "Quote",
+          "Bullet",
+          "NumberedItem",
+          "BigValue",
+          "Caption"
+        ],
+        "min": 1,
+        "max": 10,
+        "style": "stack"
+      }
+    },
+    "layouts": {
+      "default": [
+        "label",
+        "items"
+      ]
+    }
+  },
+  {
+    "type": "Chips",
+    "description": "A labelled set of chips that wrap: Tags (facts, outcomes) or Citations (what a claim rests on).",
+    "frame": "plain",
+    "slots": {
+      "label": {
+        "allow": [
+          "Eyebrow"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "stack"
+      },
+      "chips": {
+        "allow": [
+          "Tag",
+          "Citation"
+        ],
+        "min": 1,
+        "max": 8,
+        "style": "wrap"
+      }
+    },
+    "layouts": {
+      "default": [
+        "label",
+        "chips"
+      ]
+    }
+  },
+  {
+    "type": "Rows",
+    "description": "A labelled list of rows with lines between: Requirements, FitRows, Evidence (after ColumnLabels) or Findings, and an optional footnote.",
+    "frame": "plain",
+    "slots": {
+      "label": {
+        "allow": [
+          "Eyebrow"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "stack"
+      },
+      "rows": {
+        "allow": [
+          "ColumnLabels",
+          "Requirement",
+          "FitRow",
+          "Evidence",
+          "Finding"
+        ],
+        "min": 1,
+        "max": 10,
+        "style": "rows"
+      },
+      "footnote": {
+        "allow": [
+          "Caption",
+          "Body"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "stack"
+      }
+    },
+    "layouts": {
+      "default": [
+        "label",
+        "rows",
+        "footnote"
+      ]
+    }
+  },
+  {
+    "type": "Timeline",
+    "description": "Key dates side by side: an optional label (Eyebrow 'KEY DATES') and 2-6 KeyDates in date order.",
+    "frame": "plain",
+    "slots": {
+      "label": {
+        "allow": [
+          "Eyebrow"
+        ],
+        "min": 0,
+        "max": 1,
+        "style": "stack"
+      },
+      "dates": {
+        "allow": [
+          "KeyDate"
+        ],
+        "min": 2,
+        "max": 6,
+        "style": "grid"
+      }
+    },
+    "layouts": {
+      "default": [
+        "label",
+        "dates"
+      ]
+    }
+  },
+  {
+    "type": "Columns",
+    "description": "2-3 Groups side by side, e.g. alternatives weighed against each other.",
+    "frame": "plain",
+    "slots": {
+      "columns": {
+        "allow": [
+          "Group"
+        ],
+        "min": 2,
+        "max": 3,
+        "style": "grid"
+      }
+    },
+    "layouts": {
+      "default": [
+        "columns"
+      ]
+    }
+  },
+  {
+    "type": "Positions",
+    "description": "A tab strip of 2-4 Positions; the reader opens one at a time and the recommended one opens first.",
+    "frame": "plain",
+    "slots": {
+      "positions": {
+        "allow": [
+          "Position"
+        ],
+        "min": 2,
+        "max": 4,
+        "style": "tabs"
+      }
+    },
+    "layouts": {
+      "default": [
+        "positions"
+      ]
+    }
+  },
+  {
+    "type": "Position",
+    "description": "One position in a Positions tab strip: its tab (PositionTab) and its body (a Headline stating the position, Bodies, a Quote, Groups and Chips).",
+    "frame": "plain",
+    "slots": {
+      "tab": {
+        "allow": [
+          "PositionTab"
+        ],
+        "min": 1,
+        "max": 1,
+        "style": "tab"
+      },
+      "body": {
+        "allow": [
+          "Headline",
+          "Body",
+          "Quote",
+          "Group",
+          "Chips",
+          "Rows"
+        ],
+        "min": 1,
+        "max": 12,
+        "style": "stack"
+      }
+    },
+    "layouts": {
+      "default": [
+        "body"
+      ]
+    }
+  }
+]

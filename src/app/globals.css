@@ -1,26 +1,24 @@
 @import "tailwindcss";
 
+/* Text colours outside the cards (on the dark sea); the cards set their own (frames/tokens.ts). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #e6edf3;
+  --ink-2: #c3ced8;
+  --muted: #9fb0bd;
+  --eyebrow: #9fb0bd;
+  --line: rgba(255, 255, 255, 0.14);
+  --chip: rgba(255, 255, 255, 0.08);
+  --chip-line: rgba(255, 255, 255, 0.16);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-urbanist);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* The dark sea behind the glass cards of the screen design. */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(120% 70% at 25% 0%, #24495a 0%, #12303f 38%, #08141c 75%, #050b10 100%) fixed #08141c;
+  color: var(--ink);
+  font-family: var(--font-urbanist), sans-serif;
 }

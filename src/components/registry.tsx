@@ -8,13 +8,34 @@
  */
 import { defineRegistry, type Components } from "@json-render/react";
 import type { ReactNode } from "react";
-import { PageShell } from "@/components/atoms";
-import { CompositeFrame } from "@/components/CompositeFrame";
+import { Citation, PositionTab, Tag } from "@/components/atoms/chips";
+import { Bullet, KeyDate, NumberedItem } from "@/components/atoms/lists";
+import { PageShell } from "@/components/atoms/PageShell";
+import { ColumnLabels, Evidence, Finding, FitRow, Requirement } from "@/components/atoms/rows";
+import { BigValue, Body, Caption, Eyebrow, Headline, Quote } from "@/components/atoms/text";
+import { CompositeFrame } from "@/components/frames/CompositeFrame";
 import { baseCatalog, catalog, COMPOSITES } from "@/lib/catalog";
 import type { CompositeDef } from "@/lib/composites";
 
 const components: Components<typeof baseCatalog> = {
   Page: ({ props, children }) => <PageShell title={props.title}>{children}</PageShell>,
+  Eyebrow: ({ props }) => <Eyebrow {...props} />,
+  Headline: ({ props }) => <Headline {...props} />,
+  Body: ({ props }) => <Body {...props} />,
+  Quote: ({ props }) => <Quote {...props} />,
+  BigValue: ({ props }) => <BigValue {...props} />,
+  Caption: ({ props }) => <Caption {...props} />,
+  Bullet: ({ props }) => <Bullet {...props} />,
+  NumberedItem: ({ props }) => <NumberedItem {...props} />,
+  Tag: ({ props }) => <Tag {...props} />,
+  Citation: ({ props }) => <Citation {...props} />,
+  PositionTab: ({ props }) => <PositionTab {...props} />,
+  KeyDate: ({ props }) => <KeyDate {...props} />,
+  Requirement: ({ props }) => <Requirement {...props} />,
+  FitRow: ({ props }) => <FitRow {...props} />,
+  ColumnLabels: ({ props }) => <ColumnLabels {...props} />,
+  Evidence: ({ props }) => <Evidence {...props} />,
+  Finding: ({ props }) => <Finding {...props} />,
 };
 
 function frameFor(def: CompositeDef) {
