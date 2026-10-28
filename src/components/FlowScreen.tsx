@@ -8,6 +8,7 @@
  */
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { DocumentPanel } from "@/components/DocumentPanel";
 import { NotesContext, useNotesState } from "@/components/notes/state";
@@ -40,6 +41,9 @@ export function FlowScreen({ doc }: { doc: SourceDocument }) {
   return (
     <NotesContext.Provider value={notes}>
       <main className="mx-auto flex w-full max-w-[860px] flex-col gap-6 px-4 py-8 lg:max-w-[1220px] lg:pr-[360px]">
+        <Link href="/components" className="self-end text-[12px] text-[var(--muted)] hover:text-[var(--ink)]">
+          Component library →
+        </Link>
         {current === "page1" && <DocumentPanel name={doc.name} text={doc.text} busy={agent.busy} onProcess={() => build("page1")} />}
         <PageSection agent={agent} />
         <div className="flex flex-wrap items-center gap-3">

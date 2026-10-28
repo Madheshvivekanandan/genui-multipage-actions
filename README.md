@@ -40,6 +40,8 @@ Checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 | `src/components/PageStats.tsx`, `JsonDrawer.tsx` | Above each page: the model, tokens, cost and time of its AI call, and the JSON that drew it |
 | `src/components/usePageAgent.ts` | One page's AI call in the browser (stream, stop, retry) |
 | `src/components/FlowScreen.tsx` | The app screen and its page buttons |
+| `src/app/components/page.tsx`, `src/components/library/` | `/components`: every atom and composite with a live sample, their props, and the composites' stored JSON |
+| `src/lib/samples.ts` | Sample content for those previews; composite samples are built from their definitions |
 
 ## Robustness (ported from genui-studio)
 
