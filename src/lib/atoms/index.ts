@@ -10,12 +10,6 @@ export const ATOMS = { ...TEXT_ATOMS, ...ITEM_ATOMS };
 export const ATOM_TYPES = Object.keys(ATOMS);
 export type AtomType = keyof typeof ATOMS;
 
-/** The atoms by kind, e.g. for the two columns of /components. */
-export const ATOM_GROUPS: { title: string; types: AtomType[] }[] = [
-  { title: "Text", types: Object.keys(TEXT_ATOMS) as AtomType[] },
-  { title: "Chips and rows", types: Object.keys(ITEM_ATOMS) as AtomType[] },
-];
-
 /** The content pieces the AI should give notes to (labels, tabs and composites get none). */
 export const NOTE_TARGETS: AtomType[] = [
   "Headline", "Body", "Quote", "BigValue", "Bullet", "NumberedItem", "Tag", "KeyDate",

@@ -8,7 +8,8 @@
 import Link from "next/link";
 import { AtomCard } from "@/components/library/AtomCard";
 import { CompositeCard } from "@/components/library/CompositeCard";
-import { ATOM_GROUPS, ATOM_TYPES } from "@/lib/atoms";
+import { Masonry } from "@/components/library/Masonry";
+import { ATOM_TYPES, type AtomType } from "@/lib/atoms";
 import { COMPOSITES } from "@/lib/catalog";
 
 const H2 = "text-[11px] font-semibold tracking-[0.14em] text-[var(--muted)] uppercase";
@@ -30,17 +31,8 @@ export function LibraryScreen() {
 
       <section className="flex flex-col gap-3">
         <h2 className={H2}>Atoms</h2>
-        {/* Two independent columns, not grid rows: opening one card's JSON pushes down only its own column. */}
-        <div className="grid items-start gap-4 md:grid-cols-2">
-          {ATOM_GROUPS.map((group) => (
-            <div key={group.title} className="flex flex-col gap-4">
-              <h3 className="text-[12px] text-[var(--muted)]">{group.title}</h3>
-              {group.types.map((type) => (
-                <AtomCard key={type} type={type} />
-              ))}
-            </div>
-          ))}
-        </div>
+        {/* Masonry, not grid rows: no gaps, and opening one card's JSON pushes down only its own column. */}
+        <Masonry keys={ATOM_TYPES} render={(type) => <AtomCard type={type as AtomType} />} />
       </section>
 
       <section className="flex flex-col gap-3">
