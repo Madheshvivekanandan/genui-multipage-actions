@@ -30,7 +30,8 @@ export function LibraryScreen() {
 
       <section className="flex flex-col gap-3">
         <h2 className={H2}>Atoms</h2>
-        <div className="grid gap-4 md:grid-cols-2">
+        {/* items-start: opening one card's JSON must not stretch its neighbour in the same row */}
+        <div className="grid items-start gap-4 md:grid-cols-2">
           {ATOM_TYPES.map((type) => (
             <AtomCard key={type} type={type as AtomType} />
           ))}
