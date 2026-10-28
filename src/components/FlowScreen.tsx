@@ -1,56 +1,54 @@
 /**
  * FRONTEND · components/FlowScreen.tsx — the whole app: three pages, one agent each.
  *
- * Page 1 shows the document; "Process document" runs agent 1. The control at
- * the bottom of each page runs the NEXT page's agent (its own AI call) and
- * shows that page. Pages already built can be revisited without a new call.
+ * Page 1 shows the document; "Process document" runs agent 1. The button under
+ * a page builds the NEXT page with its own AI call and goes to it. Back shows
+ * a page already built, with no new call; the last page can be re-run.
  */
 "use client";
 
 import { useState } from "react";
 import { DocumentPanel } from "@/components/DocumentPanel";
-import { NextCard } from "@/components/NextCard";
+import { PageButton } from "@/components/PageButton";
 import { PageSection } from "@/components/PageSection";
 import { usePageAgent } from "@/components/usePageAgent";
-import { SAMPLE_DOCUMENT } from "@/lib/document";
-import { PAGE_IDS, PAGES, type PageId } from "@/lib/pages";
+import { PAGE_IDS, PAGES, pageAt, type PageId, type SourceDocument } from "@/lib/pages";
 
-export function FlowScreen() {
+export function FlowScreen({ doc }: { doc: SourceDocument }) {
   const [current, setCurrent] = useState<PageId>("page1");
   const agents = { page1: usePageAgent("page1"), page2: usePageAgent("page2"), page3: usePageAgent("page3") };
   const agent = agents[current];
-  const next = PAGES[current].next;
+  const back = pageAt(current, -1);
+  const next = pageAt(current, 1);
 
-  // Each agent gets the document and the pages before it (TBD: confirm what each agent needs).
-  const open = (page: PageId) => {
-    const before = PAGE_IDS.slice(0, PAGE_IDS.indexOf(page));
-    const previous = before.map((p) => agents[p].spec).filter((s) => s !== null);
-    agents[page].run({ document: SAMPLE_DOCUMENT.text, previous });
+  // One AI call: the agent gets the document and the pages before it.
+  // Pages after it were built on the old version, so they are cleared.
+  const build = (page: PageId) => {
+    const at = PAGE_IDS.indexOf(page);
+    PAGE_IDS.slice(at + 1).forEach((p) => agents[p].reset());
+    const previous = PAGE_IDS.slice(0, at).map((p) => agents[p].spec).filter((s) => s !== null);
+    agents[page].run({ document: doc.text, previous });
     setCurrent(page);
   };
+  // The next page is built the first time; after that its button just shows it.
+  const open = (page: PageId) => (agents[page].spec || agents[page].busy ? setCurrent(page) : build(page));
 
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
-      <nav className="flex gap-2 text-sm">
-        {PAGE_IDS.map((p) => (
-          <button
-            key={p}
-            onClick={() => setCurrent(p)}
-            disabled={p !== "page1" && !agents[p].spec && !agents[p].busy}
-            className={`rounded-full px-3 py-1 disabled:opacity-40 ${p === current ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900" : "border border-slate-300 dark:border-white/15"}`}
-          >
-            {PAGES[p].title}
-          </button>
-        ))}
-      </nav>
-
-      {current === "page1" && (
-        <DocumentPanel title={SAMPLE_DOCUMENT.title} text={SAMPLE_DOCUMENT.text} busy={agent.busy} onProcess={() => open("page1")} />
-      )}
+      {current === "page1" && <DocumentPanel name={doc.name} text={doc.text} busy={agent.busy} onProcess={() => build("page1")} />}
       <PageSection agent={agent} />
-      {next && agent.spec && !agent.busy && (
-        <NextCard label={`Next · ${PAGES[next].title}`} action={`View ${PAGES[next].title} →`} onClick={() => open(next)} />
-      )}
+      <div className="flex flex-wrap items-center gap-3">
+        {back && (
+          <PageButton variant="secondary" onClick={() => setCurrent(back)}>
+            ← Back to {PAGES[back].title}
+          </PageButton>
+        )}
+        {agent.spec && !agent.busy && (
+          <PageButton className="ml-auto" onClick={() => (next ? open(next) : build(current))}>
+            {next ? `View ${PAGES[next].title} →` : `Re-run ${PAGES[current].title} →`}
+          </PageButton>
+        )}
+      </div>
     </main>
   );
 }

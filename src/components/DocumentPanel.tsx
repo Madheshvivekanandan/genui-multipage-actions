@@ -1,11 +1,11 @@
 /**
  * FRONTEND · components/DocumentPanel.tsx — the document at the top of page 1, and the button that processes it.
  */
-export function DocumentPanel({ title, text, busy, onProcess }: { title: string; text: string; busy: boolean; onProcess: () => void }) {
+export function DocumentPanel({ name, text, busy, onProcess }: { name: string; text: string; busy: boolean; onProcess: () => void }) {
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="font-semibold">{title}</h2>
+        <h2 className="font-mono text-sm font-semibold">{name}</h2>
         <button
           onClick={onProcess}
           disabled={busy}

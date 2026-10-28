@@ -49,6 +49,11 @@ export function usePageAgent(page: PageId) {
     error,
     stop,
     retry,
+    /** Forget the page (and stop it if it is still building). */
+    reset: () => {
+      void stop();
+      setMessages([]);
+    },
     run: (next: PageInput) => {
       input.current = next;
       retried.current = false;
