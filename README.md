@@ -44,4 +44,11 @@ Checks: `npm run typecheck`, `npm run lint`, `npm run build`.
 - No first output within 90 s, or a 20 s gap while streaming: the call stops.
 - Stop, or closing the tab, cancels the model call (`req.signal`).
 - Timeouts and 429/502/503 come back as "The model is busy…", and the browser retries once.
-- The server logs `first output after …, done after …` for every call.
+- The server logs `first output after …, done after …` plus tokens and cost for every call.
+
+## Cost
+
+- Output is capped at 32,000 tokens per call. Without a cap OpenRouter reserves credit for the model's
+  maximum (65,536 tokens) before it starts, and refuses the call if the balance can't cover it.
+- `OPENROUTER_REASONING_EFFORT` (default `low`) sets how hard the model thinks before writing. Thinking is
+  billed as output: on page 1, `low` cut cost from $0.157 to $0.103 and time from 91 s to 51 s.
