@@ -3,6 +3,7 @@
  *
  * The page calls composites "molecules" (atomic design: molecules are made of atoms).
  * Read-only: atoms are React code, molecules are edited in data/composites.json.
+ * At the bottom: the slot styles a molecule's slots can use, each with a live demo.
  */
 "use client";
 
@@ -10,8 +11,10 @@ import Link from "next/link";
 import { AtomCard } from "@/components/library/AtomCard";
 import { CompositeCard } from "@/components/library/CompositeCard";
 import { Masonry } from "@/components/library/Masonry";
+import { StyleCard } from "@/components/library/StyleCard";
 import { ATOM_TYPES, type AtomType } from "@/lib/atoms";
 import { COMPOSITES } from "@/lib/catalog";
+import { SLOT_STYLES } from "@/lib/composites";
 
 const H2 = "text-[11px] font-semibold tracking-[0.14em] text-[var(--muted)] uppercase";
 
@@ -41,6 +44,12 @@ export function LibraryScreen() {
         {COMPOSITES.map((def) => (
           <CompositeCard key={def.type} def={def} />
         ))}
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className={H2}>Slot styles</h2>
+        <p className="text-[13px] text-[var(--muted)]">Every slot in data/composites.json picks one style: how the pieces in it are arranged.</p>
+        <Masonry keys={SLOT_STYLES} render={(style) => <StyleCard style={style as (typeof SLOT_STYLES)[number]} />} />
       </section>
     </main>
   );
