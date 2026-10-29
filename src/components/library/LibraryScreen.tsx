@@ -17,6 +17,7 @@ import { COMPOSITES } from "@/lib/catalog";
 import { SLOT_STYLES } from "@/lib/composites";
 
 const H2 = "text-[11px] font-semibold tracking-[0.14em] text-[var(--muted)] uppercase";
+const NAV = "rounded-lg border border-white/15 px-3 py-1.5 text-[13px] text-[var(--ink)] hover:bg-white/10";
 
 export function LibraryScreen() {
   return (
@@ -28,9 +29,14 @@ export function LibraryScreen() {
             {ATOM_TYPES.length} atoms (React code) · {COMPOSITES.length} molecules made of atoms (data/composites.json). Every piece can carry a note that opens a popup.
           </p>
         </div>
-        <Link href="/" className="rounded-lg border border-white/15 px-3 py-1.5 text-[13px] text-[var(--ink)] hover:bg-white/10">
-          ← Back to the app
-        </Link>
+        <nav className="flex gap-2">
+          <Link href="/" className={NAV}>
+            ← Back to the app
+          </Link>
+          <Link href="/how-it-works" className={NAV}>
+            How it works
+          </Link>
+        </nav>
       </header>
 
       <section className="flex flex-col gap-3">
